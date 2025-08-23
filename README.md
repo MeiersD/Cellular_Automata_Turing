@@ -1,2 +1,2 @@
-# Cellular Atomata
-This project is an app to mess around with CA and try out some cool algorithms. Still a work in progress
+# Building a Turing Machine using Cellular Automata
+Peter, take a look at the pdf. My idea was to try to emulate the results they got, by making an adder of some sort. The current code just has a copy of a warm-up project, feel free to play around with it and see what you can come up with
