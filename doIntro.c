@@ -1,4 +1,4 @@
-#include "doLogic.c"
+#include "translate.c"
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -19,6 +19,9 @@ binPair int2bin(int,int);
 char* int2binHelper(int);
 char* formStartingString(char*,char*);
 
+/*
+ * The purpose of this function is to collect two ints from the user, returns an intPair struct
+ * */
 intPair doIntro(){    
     printf(ANSI_COLOR_TAN "what 2 integers would you like to add?\n" ANSI_COLOR_RESET);
     int int1;
@@ -29,6 +32,9 @@ intPair doIntro(){
     return  result;
 }
 
+/*
+ * The purpose of this function is to turn the user's inputs to binary. This is mostly done with the helper function int2binHelper, but then some leading 0s are added to whichever number is smaller so that they have an equal number of digits. For example, 7 and 90 become "0111" and "01011010" which then become "00000111" and "01011010". 
+ */
 binPair int2bin(int int1, int int2){
     binPair result = {int2binHelper(int1),int2binHelper(int2)};
     int firstLen = strlen(result.first);
@@ -52,7 +58,9 @@ binPair int2bin(int int1, int int2){
     return result;
 }
 
-
+/*
+ * This logic was mostly done with AI
+ */
 char* int2binHelper(int start) {
     int bits = sizeof(int) * CHAR_BIT;
     char* binary = malloc(bits + 1);
@@ -82,6 +90,9 @@ char* int2binHelper(int start) {
     return slice;
 }
 
+/*
+ * Okay, so if you see the paper, each cell is a color which corresponds to a symbol. Those are Blank (B), Equals (=), 0 (0),1 (1), locked-in 0 (b), locked-in 1 (y), and Addition (+). I also added the Turing head (h) because that is it's own cell too. Also apparently there is a requirement to use an additional color when moving left? Unsure why but That will be its own cell too: Left (l)
+ */
 char* formStartingString(char* first, char* second){
     int productLen = 8 + strlen(first) + strlen(second); 
     char* startingString = malloc(productLen * sizeof(char));
