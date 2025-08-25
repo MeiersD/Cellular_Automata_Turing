@@ -1,5 +1,7 @@
 # Building a Turing Machine using Cellular Automata
-Peter, take a look at the pdf. My idea was to try to emulate the results they got, by making an adder of some sort.
+Peter, take a look at the pdf. Important parts are figure 1 and table 3. My idea was to try to emulate Fig 1. Some notes: the black square is the head of the Turing Machine, the blue squares are blank cells, and the purple/green squares are cells with values. The head cell may always be black, BUT IT IS CHANGING. IT CHANGES. YOU CANT SEE IT BUT IT DOES. TRUST ME IT DOES. Another note: the head points to the right. In table 3, Q0 only has rules for '=' which means the head points to the right (the '=' cell is to the right of the initial head position).
+
+To expand on the cryptic "IT CHANGES" statement: The head cell is always black, but the actual symbol on the tape is changing. Basically, for all other cells besides the head, the color represents a symbol on the tape ('0', '1', '=', '+', 'B') but rather than call the head 'h', we can store extra information in the tape by changing the symbol which represents the head depending on the head's state. So the multiple tape symbols encode for the same black square, which represents the head.
 
 # Current Code:
 I am making the product in C. It will be on the command line. If you see the output of colored squares, it is supposed to represent a pattern you'd see on page 5 of the pdf. None of the logic is coded yet, but thats the fun part I guess
