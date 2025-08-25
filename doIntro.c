@@ -35,26 +35,55 @@ intPair doIntro(){
 /*
  * The purpose of this function is to turn the user's inputs to binary. This is mostly done with the helper function int2binHelper, but then some leading 0s are added to whichever number is smaller so that they have an equal number of digits. For example, 7 and 90 become "0111" and "01011010" which then become "00000111" and "01011010". 
  */
-binPair int2bin(int int1, int int2){
-    binPair result = {int2binHelper(int1),int2binHelper(int2)};
-    int firstLen = strlen(result.first);
-    int secondLen = strlen(result.second);
-    int zerosToAdd = abs(firstLen - secondLen);
-    if (firstLen > secondLen){
-        char zeroString[firstLen];
-        for (int i = 0; i < zerosToAdd; i++){
-            zeroString[i] = '0';
-        }
-        strcat(zeroString, result.second);
-        result.second = zeroString;
-    } else if (firstLen < secondLen) {
-        char zeroString[secondLen];
-        for (int i = 0; i < zerosToAdd; i++){
-            zeroString[i] = '0';
-        }
-        strcat(zeroString, result.first);
-        result.first = zeroString;
+binPair int2bin(int int1, int int2){ //I just used AI for this. I am not about to spend several hours relearning memory allocataion
+    // Convert both to binary strings (with one leading '0' for n>0)
+    char* first  = int2binHelper(int1);
+    char* second = int2binHelper(int2);
+
+    if (!first || !second){
+        // Clean up and return NULLs on allocation failure
+        if (first) free(first);
+        if (second) free(second);
+        binPair err = {NULL, NULL};
+        return err;
     }
+
+    int firstLen = (int)strlen(first);
+    int secondLen = (int)strlen(second);
+
+    if (firstLen == secondLen){
+        binPair ok = {first, second};
+        return ok;
+    }
+
+    // Pad the shorter one on the left with '0's to match lengths
+    if (firstLen < secondLen){
+        int diff = secondLen - firstLen;
+        char* padded = (char*)malloc((size_t)secondLen + 1);
+        if (!padded){
+            free(first); free(second);
+            binPair err = {NULL, NULL};
+            return err;
+        }
+        memset(padded, '0', (size_t)diff);
+        memcpy(padded + diff, first, (size_t)firstLen + 1); // include NUL
+        free(first);
+        first = padded;
+    } else { // firstLen > secondLen
+        int diff = firstLen - secondLen;
+        char* padded = (char*)malloc((size_t)firstLen + 1);
+        if (!padded){
+            free(first); free(second);
+            binPair err = {NULL, NULL};
+            return err;
+        }
+        memset(padded, '0', (size_t)diff);
+        memcpy(padded + diff, second, (size_t)secondLen + 1);
+        free(second);
+        second = padded;
+    }
+
+    binPair result = {first, second};
     return result;
 }
 
@@ -62,41 +91,43 @@ binPair int2bin(int int1, int int2){
  * This logic was mostly done with AI
  */
 char* int2binHelper(int start) {
-    int bits = sizeof(int) * CHAR_BIT;
-    char* binary = malloc(bits + 1);
-    if (!binary) return NULL;
-
-    unsigned int mask = 1U << (bits - 1);
-    int i = 0;
-    int firstOneLoc = 0;
-
-    while (mask) {
-        binary[i++] = (start & mask) ? '1' : '0';
-        if (firstOneLoc == 0 && (start & mask)) {
-            firstOneLoc = i - 1;   // mark first '1'
-        }
-        mask >>= 1;
+    if (start == 0){
+        char* s = (char*)malloc(2);
+        if (!s) return NULL;
+        s[0] = '0';
+        s[1] = '\0';
+        return s;
     }
-    binary[i] = '\0';
 
-    // Slice from first '1'
-    int sliceLen = bits - (firstOneLoc - 1);
-    char* slice = malloc(sliceLen + 1);
-    if (!slice) { free(binary); return NULL; }
+    unsigned int n = (unsigned int)start; // treat as unsigned magnitude
+    // Count significant bits
+    int bits = 0;
+    unsigned int t = n;
+    while (t){ bits++; t >>= 1; }
 
-    strcpy(slice, binary + firstOneLoc - 1);
+    // We include one leading '0' as in the original behavior (e.g., 7 -> "0111")
+    int outLen = bits + 1; // leading '0' + bits
+    char* out = (char*)malloc((size_t)outLen + 1);
+    if (!out) return NULL;
 
-    free(binary);
-    return slice;
+    int idx = 0;
+    out[idx++] = '0';
+    for (int i = bits - 1; i >= 0; --i){
+        out[idx++] = (n & (1U << i)) ? '1' : '0';
+    }
+    out[idx] = '\0';
+    return out;
 }
 
 /*
- * Okay, so if you see the paper, each cell is a color which corresponds to a symbol. Those are Blank (B), Equals (=), 0 (0),1 (1), locked-in 0 (b), locked-in 1 (y), and Addition (+). I also added the Turing head (h) because that is it's own cell too. Also apparently there is a requirement to use an additional color when moving left? Unsure why but That will be its own cell too: Left (l)
- */
+ * Okay, so if you see the paper, each cell is a color which corresponds to a symbol. Those are Blank (B), Equals (=), 0 (0),1 (1), locked-in 0 (b), locked-in 1 (y), and Addition (+). To get more info on β, please check out doLogic.c, but in brief, it represents a State of the Turing Machine */
 char* formStartingString(char* first, char* second){
-    int productLen = 8 + strlen(first) + strlen(second); 
-    char* startingString = malloc(productLen * sizeof(char));
-    strcpy(startingString, "BBh=");
+    int productLen = 8 + (int)strlen(first) + (int)strlen(second);
+    char* startingString = (char*)malloc((size_t)productLen + 1);
+    if (!startingString) return NULL;
+    // Build: BBb= + first + + + second + =BB
+    startingString[0] = '\0';
+    strcat(startingString, "BBb=");
     strcat(startingString, first);
     strcat(startingString, "+");
     strcat(startingString, second);
