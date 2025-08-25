@@ -26,20 +26,19 @@ void translateAndPrint(char* currLine){
     printf("translateAndPrint: received string = '%s'\n", currLine);
     for (int i = 0; i < strlen(currLine); i++) {
         switch (currLine[i]){
-            case 'B': printf(ANSI_COLOR_BLUE "█"); break;
-            case '=': printf(ANSI_COLOR_TAN "█"); break;
-            case '0': printf(ANSI_COLOR_GREEN "█"); break;
-            case '1': printf(ANSI_COLOR_PURPLE "█"); break;
-            case '+': printf(ANSI_COLOR_ROYALBLUE "█"); break;
-            case 'l': printf(ANSI_COLOR_LIGHTGREY "█"); break; //I believe this is actually a state indicator, so I might need to change this later
-            case 'b': printf(ANSI_COLOR_DARKTEAL "█"); break;
-            case 'y': printf(ANSI_COLOR_CYAN "█"); break;
-            default: printf(ANSI_COLOR_BLACK "█"); break; //This is a default because all state indicators ought to be black. Except for the light grey one which is a special case
+            case 'B': printf(ANSI_COLOR_BLUE "██"); break;
+            case '=': printf(ANSI_COLOR_TAN "██"); break;
+            case '0': printf(ANSI_COLOR_GREEN "██"); break;
+            case '1': printf(ANSI_COLOR_PURPLE "██"); break;
+            case '+': printf(ANSI_COLOR_ROYALBLUE "██"); break;
+            case '?': printf(ANSI_COLOR_LIGHTGREY "██"); break; //I believe this is actually a state indicator, so I might need to change this later
+            case 'x': printf(ANSI_COLOR_DARKTEAL "██"); break;
+            case 'y': printf(ANSI_COLOR_CYAN "██"); break;
+            default: printf(ANSI_COLOR_BLACK "██"); break; //This is a default because all state indicators ought to be black. Except for the light grey one which is a special case
         }
     }
     printf("\n" ANSI_COLOR_RESET);
     return;
 }
-//char arr[18] = {'B','B','H','E','0','0','1','0','1','+','0','0','1','0','1',,,4,'B','B'};
 
 #endif
