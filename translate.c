@@ -7,13 +7,13 @@
 
 #define ANSI_COLOR_BLUE    "\x1b[38;5;19m"
 #define ANSI_COLOR_TAN       "\x1b[38;5;180m"  // Tan (Light Brown)
-#define ANSI_COLOR_BLACK     "\x1b[38;5;16m"    // Black
 #define ANSI_COLOR_GREEN   "\x1b[38;5;82m"
 #define ANSI_COLOR_PURPLE    "\x1b[38;5;93m"   // Purple (Lavenderish)
 #define ANSI_COLOR_ROYALBLUE "\x1b[38;5;69m"  // Royal Blue
 #define ANSI_COLOR_LIGHTGREY "\x1b[38;5;7m"    // Light Grey
 #define ANSI_COLOR_DARKTEAL  "\x1b[38;5;23m"   // Dark Teal (Greenish-Blue)
 #define ANSI_COLOR_CYAN    "\x1b[38;5;86m"
+#define ANSI_COLOR_BLACK     "\x1b[38;5;16m"    // Black
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 void translateAndPrint(char*);
@@ -28,14 +28,13 @@ void translateAndPrint(char* currLine){
         switch (currLine[i]){
             case 'B': printf(ANSI_COLOR_BLUE "█"); break;
             case '=': printf(ANSI_COLOR_TAN "█"); break;
-            case 'h': printf(ANSI_COLOR_BLACK "█"); break;
             case '0': printf(ANSI_COLOR_GREEN "█"); break;
             case '1': printf(ANSI_COLOR_PURPLE "█"); break;
             case '+': printf(ANSI_COLOR_ROYALBLUE "█"); break;
-            case 'l': printf(ANSI_COLOR_LIGHTGREY "█"); break;
+            case 'l': printf(ANSI_COLOR_LIGHTGREY "█"); break; //I believe this is actually a state indicator, so I might need to change this later
             case 'b': printf(ANSI_COLOR_DARKTEAL "█"); break;
             case 'y': printf(ANSI_COLOR_CYAN "█"); break;
-            default: break;
+            default: printf(ANSI_COLOR_BLACK "█"); break; //This is a default because all state indicators ought to be black. Except for the light grey one which is a special case
         }
     }
     printf("\n" ANSI_COLOR_RESET);
