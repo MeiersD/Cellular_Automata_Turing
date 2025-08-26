@@ -13,7 +13,8 @@ int main(int argc, char *argv[]) {
     intPair startingMaterial = doIntro(); //Ask what integers to add
     binPair startingBinary = int2bin(startingMaterial.first, startingMaterial.second); //Convert the two ints to binary
     char* startingString = formStartingString(startingBinary.first, startingBinary.second); //Convert the binary into a syntax-correct string ready for the CA logic loop
+                                                                               printf("state: a "); //Print the starting state
     translateAndPrint(startingString); //Print the starting string
-    // iterate(startingString) // call recursive function from doLogic.c
+    startingString = iterate(startingString); // call recursive function from doLogic.c
     return 0;
 }

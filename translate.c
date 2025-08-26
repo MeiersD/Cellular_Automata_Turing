@@ -23,7 +23,7 @@ void translateAndPrint(char* currLine){
         printf("translateAndPrint: currLine is NULL!\n");
         return;
     }
-    printf("translateAndPrint: received string = '%s'\n", currLine);
+    //printf("translateAndPrint: received string = '%s'\n", currLine);
     for (int i = 0; i < strlen(currLine); i++) {
         switch (currLine[i]){
             case 'B': printf(ANSI_COLOR_BLUE "██"); break;

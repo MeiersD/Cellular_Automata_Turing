@@ -91,28 +91,30 @@ binPair int2bin(int int1, int int2){ //I just used AI for this. I am not about t
  * This logic was mostly done with AI
  */
 char* int2binHelper(int start) {
-    if (start == 0){
-        char* s = (char*)malloc(2);
+    if (start == 0) {
+        char* s = (char*)malloc(3); // Allocate space for "00" + '\0'
         if (!s) return NULL;
         s[0] = '0';
-        s[1] = '\0';
+        s[1] = '0';
+        s[2] = '\0';
         return s;
     }
 
-    unsigned int n = (unsigned int)start; // treat as unsigned magnitude
+    unsigned int n = (unsigned int)start; // Treat as unsigned magnitude
     // Count significant bits
     int bits = 0;
     unsigned int t = n;
-    while (t){ bits++; t >>= 1; }
+    while (t) { bits++; t >>= 1; }
 
-    // We include one leading '0' as in the original behavior (e.g., 7 -> "0111")
-    int outLen = bits + 1; // leading '0' + bits
-    char* out = (char*)malloc((size_t)outLen + 1);
+    // Include two leading '0's
+    int outLen = bits + 2; // 2 leading '0's + bits
+    char* out = (char*)malloc((size_t)outLen + 1); // +1 for '\0'
     if (!out) return NULL;
 
     int idx = 0;
     out[idx++] = '0';
-    for (int i = bits - 1; i >= 0; --i){
+    out[idx++] = '0';
+    for (int i = bits - 1; i >= 0; --i) {
         out[idx++] = (n & (1U << i)) ? '1' : '0';
     }
     out[idx] = '\0';
@@ -127,7 +129,7 @@ char* formStartingString(char* first, char* second){
     if (!startingString) return NULL;
     // Build: BBb= + first + + + second + =BB
     startingString[0] = '\0';
-    strcat(startingString, "BBb=");
+    strcat(startingString, "BBa=");
     strcat(startingString, first);
     strcat(startingString, "+");
     strcat(startingString, second);
