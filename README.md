@@ -1,3 +1,6 @@
+### Demo
+[![Cellular Automata Turing Machine Demo](https://img.youtube.com/vi/PIkwhJi1-7A/0.jpg)](https://m.youtube.com/watch?v=PIkwhJi1-7A)
+
 # Building a Turing Machine using Cellular Automata
 Hi everyone, I made this project because I wanted to practice C. This whole thing is a binary calculator, meaning you can add two integers together. The way the numbers are added is special. Instead of using normal code like a+b, I am using a Turing Maching powered by Cellular Automata. I got the idea from Ninagawa's paper (pdf linked in repo). I basically tried to emulate their figure 1 using table 3 as a reference.
 
