@@ -88,7 +88,7 @@ char transitionTable[13][7][3]=  //13 states, 7 tape symbols, 3 directions per r
     {
       {'i','x','L'},
       {'h','y','L'},
-      {'j','1','R'},
+      {'j','x','R'},
       {},
       {},
       {'g','y','L'},
