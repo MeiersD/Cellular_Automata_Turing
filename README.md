@@ -20,9 +20,10 @@ When you run the code, you will see the head zig zagging across the tape. The he
 
 ### Colors:
 - Black: Head (can be in any state from a-m, there are 13 states)
+- Tan: =
 - Blue: Blank (B)
 - Green: 0
 - Purple: 1
-- Periwinkle: =
+- Periwinkle: +
 - Aquamarine: Locked/finalized 0
 - Dark Teal: Locked/finalized 1
