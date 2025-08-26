@@ -9,7 +9,7 @@ Spoiler alert: Table 3 is wrong, but I figured it out. The authors made a typo. 
 I also included an image of the table so you dont have to open the pdf if you dont want to.
 
 ## How it works
-The black square is the head of the Turing Machine, the blue squares are blank cells, and the purple/green squares are cells with values (1 or 0 respectively). The head cell may always be black, BUT IT IS CHANGING. IT CHANGES. YOU CANT SEE IT BUT IT DOES. TRUST ME IT DOES. Another note: the head points to the cell to the right. Traditional turning machines have a head which hovers over the tape and rewrites the symbol, but in cellular automata, the head must also exist on the tape itself.
+The black square is the head of the Turing Machine, the blue squares are blank cells, and the purple/green squares are cells with values (1 or 0 respectively). The head cell may always be black, but it is changing. You can't see it but it does. I'll touch more on this point in the next paragraph. Another note: the head points to the cell to the right. Traditional turning machines have a head which hovers over the tape and rewrites the symbol, but in cellular automata, the head must also exist on the tape itself.
 
 To expand on the cryptic "IT CHANGES" statement: The head cell is always black, but the actual symbol on the tape is changing. Basically, for all other cells besides the head, the color represents a symbol on the tape ('=', '0', '1', '+', 'B', 'y', 'x') but rather than call the head 'h', we can store extra information in the tape by changing the symbol which represents the head depending on the head's state. So the multiple tape symbols encode for the same black square, which represents the head.
 
