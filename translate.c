@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
+#include <math.h>
 
 #define ANSI_COLOR_BLUE    "\x1b[38;5;19m"
 #define ANSI_COLOR_TAN       "\x1b[38;5;180m"  // Tan (Light Brown)
@@ -17,6 +18,8 @@
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
 void translateAndPrint(char*);
+void pprintf(char*);
+void convertForNormies(char*);
 
 void translateAndPrint(char* currLine){
     if (currLine == NULL) {
@@ -38,6 +41,32 @@ void translateAndPrint(char* currLine){
         }
     }
     printf("\n" ANSI_COLOR_RESET);
+    return;
+}
+
+void pprintf(char* str){
+    printf("string:  ");
+    for (int i = 0; i < strlen(str); i++){
+        printf("%c ", str[i]);
+    }
+    printf("\n");
+}
+
+//converts the binary to base 10 for the user to understand
+void convertForNormies(char* str){
+    int firstDigitLoc = -1;
+    double totalCount = 0;
+    int len = strlen(str);
+    for (int i = len-1; i >= 1; i--){
+        if ((str[i] == '1' || str[i] == '0') && firstDigitLoc == -1){
+            firstDigitLoc = i;
+        }
+        if (str[i] == '1'){
+            totalCount += pow(2, (len-(len-firstDigitLoc))-i);
+        }
+    }
+    int totalCountInt = (int)totalCount;
+    printf("Result:  %d\n", totalCountInt);
     return;
 }
 
